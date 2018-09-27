@@ -5,18 +5,25 @@
   
 
   
-  <title>GtLeaf.砥砺前行</title>
+  <title>hexo部署在Github Page流程 | GtLeaf.砥砺前行</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="GtLeaf 博客">
-<meta property="og:type" content="website">
-<meta property="og:title" content="GtLeaf.砥砺前行">
-<meta property="og:url" content="https://gtleaf.github.io/index.html">
+  <meta name="description" content="1.简介是一个快速, 简洁且高效的博客框架. 让上百个页面在几秒内瞬间完成渲染. Hexo支持Github Flavored Markdown的所有功能, 并自己也拥有强大的插件系统.Hexo(中文官方网站):https://hexo.io/zh-cn/ 2.安装Hexo详细教程：https://www.cnblogs.com/visugar/p/6821777.html 3.生成博客网站文件这部">
+<meta name="keywords" content="Hexo,博客">
+<meta property="og:type" content="article">
+<meta property="og:title" content="hexo部署在Github Page流程">
+<meta property="og:url" content="https://gtleaf.github.io/2018/09/24/hexo部署在Github-Page流程/index.html">
 <meta property="og:site_name" content="GtLeaf.砥砺前行">
-<meta property="og:description" content="GtLeaf 博客">
+<meta property="og:description" content="1.简介是一个快速, 简洁且高效的博客框架. 让上百个页面在几秒内瞬间完成渲染. Hexo支持Github Flavored Markdown的所有功能, 并自己也拥有强大的插件系统.Hexo(中文官方网站):https://hexo.io/zh-cn/ 2.安装Hexo详细教程：https://www.cnblogs.com/visugar/p/6821777.html 3.生成博客网站文件这部">
 <meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://i.postimg.cc/59857TX8/image.png">
+<meta property="og:image" content="https://i.postimg.cc/mrVJHhs2/Blog.png">
+<meta property="og:image" content="https://i.postimg.cc/8kykSPfG/config.png">
+<meta property="og:image" content="https://i.postimg.cc/vZnGfrq8/github.png">
+<meta property="og:updated_time" content="2018-09-25T01:19:16.564Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="GtLeaf.砥砺前行">
-<meta name="twitter:description" content="GtLeaf 博客">
+<meta name="twitter:title" content="hexo部署在Github Page流程">
+<meta name="twitter:description" content="1.简介是一个快速, 简洁且高效的博客框架. 让上百个页面在几秒内瞬间完成渲染. Hexo支持Github Flavored Markdown的所有功能, 并自己也拥有强大的插件系统.Hexo(中文官方网站):https://hexo.io/zh-cn/ 2.安装Hexo详细教程：https://www.cnblogs.com/visugar/p/6821777.html 3.生成博客网站文件这部">
+<meta name="twitter:image" content="https://i.postimg.cc/59857TX8/image.png">
   
     <link rel="alternate" href="/atom.xml" title="GtLeaf.砥砺前行" type="application/atom+xml">
   
@@ -67,49 +74,7 @@
   </div>
 </header>
       <div class="outer">
-        <section id="main">
-  
-    <article id="post-阿里云用Opensips搭建SIP服务器" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2018/09/26/阿里云用Opensips搭建SIP服务器/" class="article-date">
-  <time datetime="2018-09-26T02:57:19.000Z" itemprop="datePublished">2018-09-26</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/09/26/阿里云用Opensips搭建SIP服务器/">阿里云用Opensips搭建SIP服务器</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h1 id="调试"><a href="#调试" class="headerlink" title="调试"></a>调试</h1><p>我们需要用抓包来获取请求信息<br>选用ngrep来抓包<br><code>apt-get install ngrep</code><br><a href="http://man.linuxde.net/ngrep" target="_blank" rel="noopener">ngrep语法</a><br><code>ngrep –p –q –W byline port 5060</code><br>开始监听5060端口<br>如果opensips使用前台调试，这时候只有一个窗口，无法再开启ngrep进行抓包了<br>所以我们可以通过screen解决问题<br>安装screen:<br><code>apt-get install screen</code><br>开启一个新的对话框：<br><code>screen -R sip</code><br>可以在sip窗口进行各种操作，通过Ctrl+a然后按d挂起,返回原窗口<br>通过下面的命令切回sip窗口<br><code>screen -r sip</code><br>如果在sip窗口意外关闭会话程序，用上面的命令无法切换到sip窗口，使用以下命令<br><code>screen -d mc</code><br><code>screen -r mc</code><br>在sip窗口输入<code>exit</code>，即可关闭sip窗口。<br>现在我们就可以即用ngrep抓包，又能在前台运行opensips了。</p>
-<h1 id="错误"><a href="#错误" class="headerlink" title="错误"></a>错误</h1><h2 id="1-403-Preload-Route-denied"><a href="#1-403-Preload-Route-denied" class="headerlink" title="1.403 Preload Route denied"></a>1.403 Preload Route denied</h2><p>解决在opensips.cfg中加入alise=公网ip</p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="https://gtleaf.github.io/2018/09/26/阿里云用Opensips搭建SIP服务器/" data-id="cjmjwelai000bt0vhod6re63w" class="article-share-link">Share</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/opensips/">opensips</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-hexo部署在Github-Page流程" class="article article-type-post" itemscope itemprop="blogPost">
+        <section id="main"><article id="post-hexo部署在Github-Page流程" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2018/09/24/hexo部署在Github-Page流程/" class="article-date">
   <time datetime="2018-09-24T09:13:53.000Z" itemprop="datePublished">2018-09-24</time>
@@ -122,8 +87,8 @@
       <header class="article-header">
         
   
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/09/24/hexo部署在Github-Page流程/">hexo部署在Github Page流程</a>
+    <h1 class="article-title" itemprop="name">
+      hexo部署在Github Page流程
     </h1>
   
 
@@ -157,95 +122,28 @@
     </footer>
   </div>
   
-</article>
-
-
+    
+<nav id="article-nav">
   
-    <article id="post-第一篇文章" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2018/09/24/第一篇文章/" class="article-date">
-  <time datetime="2018-09-24T08:24:11.000Z" itemprop="datePublished">2018-09-24</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
+    <a href="/2018/09/26/阿里云用Opensips搭建SIP服务器/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
         
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/09/24/第一篇文章/">第一篇文章</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>欢迎来到我的博客！</p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="https://gtleaf.github.io/2018/09/24/第一篇文章/" data-id="cjmjwel8q0000t0vh4zju7v5w" class="article-share-link">Share</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/开始/">开始</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/日志/">日志</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-hello-world" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2018/09/24/hello-world/" class="article-date">
-  <time datetime="2018-09-24T08:04:14.120Z" itemprop="datePublished">2018-09-24</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
+          阿里云用Opensips搭建SIP服务器
         
+      </div>
+    </a>
   
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/09/24/hello-world/">Hello World</a>
-    </h1>
   
+    <a href="/2018/09/24/第一篇文章/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">第一篇文章</div>
+    </a>
+  
+</nav>
 
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>Welcome to <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="noopener">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="noopener">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="noopener">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="noopener">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="noopener">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="noopener">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/deployment.html" target="_blank" rel="noopener">Deployment</a></p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="https://gtleaf.github.io/2018/09/24/hello-world/" data-id="cjmjwel9a0003t0vhaiwsd406" class="article-share-link">Share</a>
-      
-      
-    </footer>
-  </div>
   
 </article>
-
-
-  
-
 
 </section>
         
