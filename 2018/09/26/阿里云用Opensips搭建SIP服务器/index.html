@@ -7,18 +7,18 @@
   
   <title>阿里云用Opensips搭建SIP服务器 | GtLeaf.砥砺前行</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="调试我们需要用抓包来获取请求信息选用ngrep来抓包apt-get install ngrepngrep语法ngrep –p –q –W byline port 5060开始监听5060端口如果opensips使用前台调试，这时候只有一个窗口，无法再开启ngrep进行抓包了所以我们可以通过screen解决问题安装screen:apt-get install screen开启一个新的对话框：scre">
+  <meta name="description" content="调试我们需要用抓包来获取请求信息选用ngrep来抓包——ngrep语法 apt-get install ngrep 开始监听5060端口： ngrep –p –q –W byline port 5060 如果opensips使用前台调试，这时候只有一个窗口，无法再开启ngrep进行抓包了所以我们可以通过screen解决问题，安装screen: apt-get install screen 开启一个">
 <meta name="keywords" content="opensips">
 <meta property="og:type" content="article">
 <meta property="og:title" content="阿里云用Opensips搭建SIP服务器">
 <meta property="og:url" content="https://gtleaf.github.io/2018/09/26/阿里云用Opensips搭建SIP服务器/index.html">
 <meta property="og:site_name" content="GtLeaf.砥砺前行">
-<meta property="og:description" content="调试我们需要用抓包来获取请求信息选用ngrep来抓包apt-get install ngrepngrep语法ngrep –p –q –W byline port 5060开始监听5060端口如果opensips使用前台调试，这时候只有一个窗口，无法再开启ngrep进行抓包了所以我们可以通过screen解决问题安装screen:apt-get install screen开启一个新的对话框：scre">
+<meta property="og:description" content="调试我们需要用抓包来获取请求信息选用ngrep来抓包——ngrep语法 apt-get install ngrep 开始监听5060端口： ngrep –p –q –W byline port 5060 如果opensips使用前台调试，这时候只有一个窗口，无法再开启ngrep进行抓包了所以我们可以通过screen解决问题，安装screen: apt-get install screen 开启一个">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2018-09-26T03:49:09.021Z">
+<meta property="og:updated_time" content="2018-09-27T01:31:12.708Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="阿里云用Opensips搭建SIP服务器">
-<meta name="twitter:description" content="调试我们需要用抓包来获取请求信息选用ngrep来抓包apt-get install ngrepngrep语法ngrep –p –q –W byline port 5060开始监听5060端口如果opensips使用前台调试，这时候只有一个窗口，无法再开启ngrep进行抓包了所以我们可以通过screen解决问题安装screen:apt-get install screen开启一个新的对话框：scre">
+<meta name="twitter:description" content="调试我们需要用抓包来获取请求信息选用ngrep来抓包——ngrep语法 apt-get install ngrep 开始监听5060端口： ngrep –p –q –W byline port 5060 如果opensips使用前台调试，这时候只有一个窗口，无法再开启ngrep进行抓包了所以我们可以通过screen解决问题，安装screen: apt-get install screen 开启一个">
   
     <link rel="alternate" href="/atom.xml" title="GtLeaf.砥砺前行" type="application/atom+xml">
   
@@ -91,13 +91,25 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h1 id="调试"><a href="#调试" class="headerlink" title="调试"></a>调试</h1><p>我们需要用抓包来获取请求信息<br>选用ngrep来抓包<br><code>apt-get install ngrep</code><br><a href="http://man.linuxde.net/ngrep" target="_blank" rel="noopener">ngrep语法</a><br><code>ngrep –p –q –W byline port 5060</code><br>开始监听5060端口<br>如果opensips使用前台调试，这时候只有一个窗口，无法再开启ngrep进行抓包了<br>所以我们可以通过screen解决问题<br>安装screen:<br><code>apt-get install screen</code><br>开启一个新的对话框：<br><code>screen -R sip</code><br>可以在sip窗口进行各种操作，通过Ctrl+a然后按d挂起,返回原窗口<br>通过下面的命令切回sip窗口<br><code>screen -r sip</code><br>如果在sip窗口意外关闭会话程序，用上面的命令无法切换到sip窗口，使用以下命令<br><code>screen -d mc</code><br><code>screen -r mc</code><br>在sip窗口输入<code>exit</code>，即可关闭sip窗口。<br>现在我们就可以即用ngrep抓包，又能在前台运行opensips了。</p>
+        <h1 id="调试"><a href="#调试" class="headerlink" title="调试"></a>调试</h1><p>我们需要用抓包来获取请求信息<br>选用ngrep来抓包——<a href="http://man.linuxde.net/ngrep" target="_blank" rel="noopener">ngrep语法</a></p>
+<p><code>apt-get install ngrep</code></p>
+<p>开始监听5060端口：</p>
+<p><code>ngrep –p –q –W byline port 5060</code></p>
+<p>如果opensips使用前台调试，这时候只有一个窗口，无法再开启ngrep进行抓包了<br>所以我们可以通过screen解决问题，安装screen:</p>
+<p><code>apt-get install screen</code></p>
+<p>开启一个新的对话框：</p>
+<p><code>screen -R sip</code></p>
+<p>可以在sip窗口进行各种操作，通过Ctrl+a然后按d挂起,返回原窗口<br>通过下面的命令切回sip窗口：</p>
+<p><code>screen -r sip</code></p>
+<p>如果在sip窗口意外关闭会话程序，用上面的命令无法切换到sip窗口，使用以下命令：</p>
+<p><code>screen -d mc</code><br><code>screen -r mc</code></p>
+<p>在sip窗口输入<code>exit</code>，即可关闭sip窗口。<br>现在我们就可以即用ngrep抓包，又能在前台运行opensips了。</p>
 <h1 id="错误"><a href="#错误" class="headerlink" title="错误"></a>错误</h1><h2 id="1-403-Preload-Route-denied"><a href="#1-403-Preload-Route-denied" class="headerlink" title="1.403 Preload Route denied"></a>1.403 Preload Route denied</h2><p>解决在opensips.cfg中加入alise=公网ip</p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://gtleaf.github.io/2018/09/26/阿里云用Opensips搭建SIP服务器/" data-id="cjmjwelai000bt0vhod6re63w" class="article-share-link">Share</a>
+      <a data-url="https://gtleaf.github.io/2018/09/26/阿里云用Opensips搭建SIP服务器/" data-id="cjmjwivnm0001a0vhyq9s67e0" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/opensips/">opensips</a></li></ul>
