@@ -1,0 +1,681 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-CN">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="RecyclerView," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="代码实现博客地址：https://blog.csdn.net/qq_39085422/article/details/78612132我只掌握了RecyclerView基础用法，所以参考别人博客的代码实现。我使用CardView代替RoundImageView实现圆角效果。 遇到的问题1.CardView阴影显示不完全原因：将CardView作为最外层布局，可能是两个CardView重叠时，边界会">
+<meta name="keywords" content="RecyclerView">
+<meta property="og:type" content="article">
+<meta property="og:title" content="RecyclerView实现探探卡片滑动功能">
+<meta property="og:url" content="https://gtleaf.github.io/2018/10/07/实现探探滑动功能/index.html">
+<meta property="og:site_name" content="GtLeaf.砥砺前行">
+<meta property="og:description" content="代码实现博客地址：https://blog.csdn.net/qq_39085422/article/details/78612132我只掌握了RecyclerView基础用法，所以参考别人博客的代码实现。我使用CardView代替RoundImageView实现圆角效果。 遇到的问题1.CardView阴影显示不完全原因：将CardView作为最外层布局，可能是两个CardView重叠时，边界会">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://i.postimg.cc/VkRn0SyD/Card_View_border.jpg">
+<meta property="og:image" content="https://i.postimg.cc/66mHTmVy/Card_View.jpg">
+<meta property="og:updated_time" content="2018-10-07T09:42:57.045Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="RecyclerView实现探探卡片滑动功能">
+<meta name="twitter:description" content="代码实现博客地址：https://blog.csdn.net/qq_39085422/article/details/78612132我只掌握了RecyclerView基础用法，所以参考别人博客的代码实现。我使用CardView代替RoundImageView实现圆角效果。 遇到的问题1.CardView阴影显示不完全原因：将CardView作为最外层布局，可能是两个CardView重叠时，边界会">
+<meta name="twitter:image" content="https://i.postimg.cc/VkRn0SyD/Card_View_border.jpg">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://gtleaf.github.io/2018/10/07/实现探探滑动功能/"/>
+
+
+
+
+
+  <title>RecyclerView实现探探卡片滑动功能 | GtLeaf.砥砺前行</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">GtLeaf.砥砺前行</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">今天是谁叫我起床？</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Archives
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://gtleaf.github.io/2018/10/07/实现探探滑动功能/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="GtLeaf.砥砺前行">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">RecyclerView实现探探卡片滑动功能</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-10-07T10:35:56+08:00">
+                2018-10-07
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="代码实现"><a href="#代码实现" class="headerlink" title="代码实现"></a>代码实现</h1><p>博客地址：<a href="https://blog.csdn.net/qq_39085422/article/details/78612132" target="_blank" rel="noopener">https://blog.csdn.net/qq_39085422/article/details/78612132</a><br>我只掌握了RecyclerView基础用法，所以参考别人博客的代码实现。<br>我使用CardView代替RoundImageView实现圆角效果。</p>
+<h1 id="遇到的问题"><a href="#遇到的问题" class="headerlink" title="遇到的问题"></a>遇到的问题</h1><h1 id="1-CardView阴影显示不完全"><a href="#1-CardView阴影显示不完全" class="headerlink" title="1.CardView阴影显示不完全"></a>1.CardView阴影显示不完全</h1><p><a href="https://postimg.cc/nXXC6hhD" target="_blank" rel="noopener"><img src="https://i.postimg.cc/VkRn0SyD/Card_View_border.jpg" alt="Card_View_border.jpg"></a><br>原因：将CardView作为最外层布局，可能是两个CardView重叠时，边界会融合到一起。<br>解决方法：在外层再套一层布局，比如LinearLayout之类的。<br>解决后效果图：<br><a href="https://postimg.cc/pyKQ6k6H" target="_blank" rel="noopener"><img src="https://i.postimg.cc/66mHTmVy/Card_View.jpg" alt="Card_View.jpg"></a><br>在文末会贴出我的布局代码。</p>
+<h1 id="2-左右滑，滑出时卡顿-未解决"><a href="#2-左右滑，滑出时卡顿-未解决" class="headerlink" title="2.左右滑，滑出时卡顿(未解决)"></a>2.左右滑，滑出时卡顿(未解决)</h1><p>原因：adapter.notifyDataSetChanged();<br>卡片滑出后需要删除对应的数据，对数据源进行remove()操作，之后通知adapter,这个时候会发生卡顿</p>
+<h1 id="3-向上下滑动时，动画衔接的不好"><a href="#3-向上下滑动时，动画衔接的不好" class="headerlink" title="3.向上下滑动时，动画衔接的不好"></a>3.向上下滑动时，动画衔接的不好</h1><p>原因：临界值计算公式不合理，只计算了在X轴的偏移量<br>解决：CardItemTouchHelperCallback类中的onChildDraw()里，<br>解决前代码：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">float ratio = dX / getThreshold(recyclerView, viewHolder);</span><br></pre></td></tr></table></figure></p>
+<p>解决后代码：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">float distance = (float)Math.sqrt(dX*dX+dY*dY);</span><br><span class="line">float ratio = distance / getThreshold(recyclerView, viewHolder);</span><br></pre></td></tr></table></figure></p>
+<p>变化：增加了distance变量，计算位移两点间的直线距离。</p>
+<h1 id="拓展"><a href="#拓展" class="headerlink" title="拓展"></a>拓展</h1><p>如果你搜索卡片层叠效果，你会发现更多更详细的内容</p>
+<h1 id="总结："><a href="#总结：" class="headerlink" title="总结："></a>总结：</h1><p>折腾了好久也无法像探探那样流畅，只能朝四个方向滑出，而不能360°滑出。<br>流畅度效果也有不少差距，可见自己水平还有待提高。</p>
+<h1 id="相关代码："><a href="#相关代码：" class="headerlink" title="相关代码："></a>相关代码：</h1><h2 id="item-card-slide-xml"><a href="#item-card-slide-xml" class="headerlink" title="item_card_slide.xml"></a>item_card_slide.xml</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br></pre></td><td class="code"><pre><span class="line">&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;</span><br><span class="line">&lt;RelativeLayout</span><br><span class="line">    xmlns:android=&quot;http://schemas.android.com/apk/res/android&quot;</span><br><span class="line">    xmlns:app=&quot;http://schemas.android.com/apk/res-auto&quot;</span><br><span class="line">    android:layout_width=&quot;336dp&quot;</span><br><span class="line">    android:layout_height=&quot;426dp&quot;&gt;</span><br><span class="line"></span><br><span class="line">    &lt;android.support.v7.widget.CardView</span><br><span class="line">        android:layout_width=&quot;match_parent&quot;</span><br><span class="line">        android:layout_height=&quot;match_parent&quot;</span><br><span class="line">        app:cardCornerRadius=&quot;7.5dp&quot;</span><br><span class="line">        app:cardElevation=&quot;1dp&quot;</span><br><span class="line">        app:cardUseCompatPadding=&quot;true&quot;&gt;</span><br><span class="line"></span><br><span class="line">        &lt;LinearLayout</span><br><span class="line">            android:layout_width=&quot;match_parent&quot;</span><br><span class="line">            android:layout_height=&quot;match_parent&quot;</span><br><span class="line">            android:background=&quot;#ffffff&quot;</span><br><span class="line">            android:orientation=&quot;vertical&quot;&gt;</span><br><span class="line"></span><br><span class="line">            &lt;RelativeLayout</span><br><span class="line">                android:layout_width=&quot;match_parent&quot;</span><br><span class="line">                android:layout_height=&quot;0dp&quot;</span><br><span class="line">                android:layout_weight=&quot;1&quot;&gt;</span><br><span class="line"></span><br><span class="line">                &lt;ImageView</span><br><span class="line">                    android:id=&quot;@+id/iv_avatar&quot;</span><br><span class="line">                    android:layout_width=&quot;match_parent&quot;</span><br><span class="line">                    android:layout_height=&quot;match_parent&quot;</span><br><span class="line">                    android:scaleType=&quot;centerCrop&quot;</span><br><span class="line">                    android:background=&quot;@color/pink&quot;/&gt;</span><br><span class="line"></span><br><span class="line">                &lt;ImageView</span><br><span class="line">                    android:id=&quot;@+id/iv_dislike&quot;</span><br><span class="line">                    android:layout_width=&quot;wrap_content&quot;</span><br><span class="line">                    android:layout_height=&quot;wrap_content&quot;</span><br><span class="line">                    android:layout_alignParentRight=&quot;true&quot;</span><br><span class="line">                    android:layout_marginRight=&quot;15dp&quot;</span><br><span class="line">                    android:layout_marginTop=&quot;15dp&quot;</span><br><span class="line">                    android:alpha=&quot;0&quot;</span><br><span class="line">                    android:background=&quot;@color/blue&quot;/&gt;</span><br><span class="line"></span><br><span class="line">                &lt;ImageView</span><br><span class="line">                    android:id=&quot;@+id/iv_like&quot;</span><br><span class="line">                    android:layout_width=&quot;wrap_content&quot;</span><br><span class="line">                    android:layout_height=&quot;wrap_content&quot;</span><br><span class="line">                    android:layout_alignParentRight=&quot;true&quot;</span><br><span class="line">                    android:layout_marginRight=&quot;15dp&quot;</span><br><span class="line">                    android:layout_marginTop=&quot;15dp&quot;</span><br><span class="line">                    android:alpha=&quot;0&quot;</span><br><span class="line">                    android:background=&quot;@color/grey&quot;/&gt;</span><br><span class="line"></span><br><span class="line">            &lt;/RelativeLayout&gt;</span><br><span class="line">            &lt;RelativeLayout</span><br><span class="line">                android:layout_width=&quot;match_parent&quot;</span><br><span class="line">                android:layout_height=&quot;100dp&quot;</span><br><span class="line">                android:paddingLeft=&quot;14dp&quot;</span><br><span class="line">                android:paddingTop=&quot;15dp&quot;&gt;</span><br><span class="line">                &lt;TextView</span><br><span class="line">                    android:id=&quot;@+id/tv_name&quot;</span><br><span class="line">                    android:layout_width=&quot;wrap_content&quot;</span><br><span class="line">                    android:layout_height=&quot;wrap_content&quot;</span><br><span class="line">                    android:gravity=&quot;center&quot;</span><br><span class="line">                    android:text=&quot;小姐姐&quot;</span><br><span class="line">                    android:textColor=&quot;@android:color/black&quot;</span><br><span class="line">                    android:textSize=&quot;16sp&quot; /&gt;</span><br><span class="line"></span><br><span class="line">                &lt;TextView</span><br><span class="line">                    android:id=&quot;@+id/tv_age&quot;</span><br><span class="line">                    android:layout_width=&quot;wrap_content&quot;</span><br><span class="line">                    android:layout_height=&quot;wrap_content&quot;</span><br><span class="line">                    android:layout_below=&quot;@id/tv_name&quot;</span><br><span class="line">                    android:layout_marginTop=&quot;5dp&quot;</span><br><span class="line">                    android:background=&quot;@color/pink&quot;</span><br><span class="line">                    android:gravity=&quot;center&quot;</span><br><span class="line">                    android:text=&quot;♀ 23&quot;</span><br><span class="line">                    android:textColor=&quot;#FFFFFF&quot;</span><br><span class="line">                    android:textSize=&quot;14sp&quot; /&gt;</span><br><span class="line"></span><br><span class="line">                &lt;TextView</span><br><span class="line">                    android:id=&quot;@+id/tv_constellation&quot;</span><br><span class="line">                    android:layout_width=&quot;wrap_content&quot;</span><br><span class="line">                    android:layout_height=&quot;wrap_content&quot;</span><br><span class="line">                    android:layout_below=&quot;@id/tv_name&quot;</span><br><span class="line">                    android:layout_marginLeft=&quot;4dp&quot;</span><br><span class="line">                    android:layout_marginTop=&quot;5dp&quot;</span><br><span class="line">                    android:layout_toRightOf=&quot;@id/tv_age&quot;</span><br><span class="line">                    android:background=&quot;@color/olivedrab&quot;</span><br><span class="line">                    android:gravity=&quot;center&quot;</span><br><span class="line">                    android:text=&quot;狮子座&quot;</span><br><span class="line">                    android:textColor=&quot;#FFFFFF&quot;</span><br><span class="line">                    android:textSize=&quot;14sp&quot; /&gt;</span><br><span class="line"></span><br><span class="line">                &lt;TextView</span><br><span class="line">                    android:layout_width=&quot;wrap_content&quot;</span><br><span class="line">                    android:layout_height=&quot;wrap_content&quot;</span><br><span class="line">                    android:layout_below=&quot;@id/tv_age&quot;</span><br><span class="line">                    android:layout_marginTop=&quot;5dp&quot;</span><br><span class="line">                    android:gravity=&quot;center&quot;</span><br><span class="line">                    android:text=&quot;IT/互联网&quot;</span><br><span class="line">                    android:textColor=&quot;#cbcbcb&quot; /&gt;</span><br><span class="line"></span><br><span class="line">            &lt;/RelativeLayout&gt;</span><br><span class="line">        &lt;/LinearLayout&gt;</span><br><span class="line">    &lt;/android.support.v7.widget.CardView&gt;</span><br><span class="line"></span><br><span class="line">&lt;/RelativeLayout&gt;</span><br></pre></td></tr></table></figure>
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/RecyclerView/" rel="tag"># RecyclerView</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/10/05/android多媒体技术/" rel="next" title="android多媒体技术">
+                <i class="fa fa-chevron-left"></i> android多媒体技术
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">John Doe</p>
+              <p class="site-description motion-element" itemprop="description">GtLeaf 博客</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">7</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                
+                  <span class="site-state-item-count">6</span>
+                  <span class="site-state-item-name">tags</span>
+                
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#代码实现"><span class="nav-number">1.</span> <span class="nav-text">代码实现</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#遇到的问题"><span class="nav-number">2.</span> <span class="nav-text">遇到的问题</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#1-CardView阴影显示不完全"><span class="nav-number">3.</span> <span class="nav-text">1.CardView阴影显示不完全</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2-左右滑，滑出时卡顿-未解决"><span class="nav-number">4.</span> <span class="nav-text">2.左右滑，滑出时卡顿(未解决)</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#3-向上下滑动时，动画衔接的不好"><span class="nav-number">5.</span> <span class="nav-text">3.向上下滑动时，动画衔接的不好</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#拓展"><span class="nav-number">6.</span> <span class="nav-text">拓展</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#总结："><span class="nav-number">7.</span> <span class="nav-text">总结：</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#相关代码："><span class="nav-number">8.</span> <span class="nav-text">相关代码：</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#item-card-slide-xml"><span class="nav-number">8.1.</span> <span class="nav-text">item_card_slide.xml</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">John Doe</span>
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Mist</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
