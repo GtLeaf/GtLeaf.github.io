@@ -1,0 +1,687 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-CN">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="android Vitamio," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="简介最近偶然抓到某直播平台的api，而且这也是Android的基础技能，所以突发奇想做个直播功能。 用的库是Vitamio，虽然也有一点点小坑,但这个库用法简单，功能强大。 能播放MKV,FLV,MP4等主流视频格式，也支持MMS, RTSP, RTMP, HLS(m3u8)等常见的多种视频流媒体协议。 1.导入与配置参考博客：https://blog.csdn.net/qq_29078329/a">
+<meta name="keywords" content="android Vitamio">
+<meta property="og:type" content="article">
+<meta property="og:title" content="android多媒体——Vitamio">
+<meta property="og:url" content="https://gtleaf.github.io/2018/10/14/android多媒体——Vitamio/index.html">
+<meta property="og:site_name" content="GtLeaf.砥砺前行">
+<meta property="og:description" content="简介最近偶然抓到某直播平台的api，而且这也是Android的基础技能，所以突发奇想做个直播功能。 用的库是Vitamio，虽然也有一点点小坑,但这个库用法简单，功能强大。 能播放MKV,FLV,MP4等主流视频格式，也支持MMS, RTSP, RTMP, HLS(m3u8)等常见的多种视频流媒体协议。 1.导入与配置参考博客：https://blog.csdn.net/qq_29078329/a">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/7037957-9fb531cfef60d637.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/7037957-4ec9ef2ec4b1a6b2.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/7037957-8ebbac30e1e6b3a7.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/7037957-6cbced2cb8827cfd.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:updated_time" content="2018-10-13T16:43:41.118Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="android多媒体——Vitamio">
+<meta name="twitter:description" content="简介最近偶然抓到某直播平台的api，而且这也是Android的基础技能，所以突发奇想做个直播功能。 用的库是Vitamio，虽然也有一点点小坑,但这个库用法简单，功能强大。 能播放MKV,FLV,MP4等主流视频格式，也支持MMS, RTSP, RTMP, HLS(m3u8)等常见的多种视频流媒体协议。 1.导入与配置参考博客：https://blog.csdn.net/qq_29078329/a">
+<meta name="twitter:image" content="https://upload-images.jianshu.io/upload_images/7037957-9fb531cfef60d637.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://gtleaf.github.io/2018/10/14/android多媒体——Vitamio/"/>
+
+
+
+
+
+  <title>android多媒体——Vitamio | GtLeaf.砥砺前行</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">GtLeaf.砥砺前行</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">今天是谁叫我起床？</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Archives
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://gtleaf.github.io/2018/10/14/android多媒体——Vitamio/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="GtLeaf.砥砺前行">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">android多媒体——Vitamio</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-10-14T00:03:07+08:00">
+                2018-10-14
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h1><pre><code>最近偶然抓到某直播平台的api，而且这也是Android的基础技能，所以突发奇想做个直播功能。
+用的库是Vitamio，虽然也有一点点小坑,但这个库用法简单，功能强大。
+能播放MKV,FLV,MP4等主流视频格式，也支持MMS, RTSP, RTMP, HLS(m3u8)等常见的多种视频流媒体协议。
+</code></pre><h1 id="1-导入与配置"><a href="#1-导入与配置" class="headerlink" title="1.导入与配置"></a>1.导入与配置</h1><p>参考博客：<a href="https://blog.csdn.net/qq_29078329/article/details/75039690" target="_blank" rel="noopener">https://blog.csdn.net/qq_29078329/article/details/75039690</a><br>由于官网提供的是module，不是jar，所以要先从github下载：<a href="https://github.com/yixia/VitamioBundle" target="_blank" rel="noopener">Vitamio的github地址</a></p>
+<p>下好后android studio直接导入即可，建议新手将vitamio和vitamio-sample都导入<br>之后参考博客内容，在AndroidManifest中，注册io.vov.vitamio.activity.InitActivity：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&lt;activity</span><br><span class="line">            android:name=&quot;io.vov.vitamio.activity.InitActivity&quot;</span><br><span class="line">            android:configChanges=&quot;orientation|screenSize|smallestScreenSize|keyboard|keyboardHidden|navigation&quot;</span><br><span class="line">            android:launchMode=&quot;singleTop&quot;</span><br><span class="line">            android:theme=&quot;@android:style/Theme.NoTitleBar&quot;</span><br><span class="line">            android:windowSoftInputMode=&quot;stateAlwaysHidden&quot; /&gt;</span><br></pre></td></tr></table></figure></p>
+<p>添加权限：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&lt;uses-permission android:name=&quot;android.permission.WAKE_LOCK&quot; /&gt;</span><br><span class="line">&lt;uses-permission android:name=&quot;android.permission.INTERNET&quot; /&gt;</span><br><span class="line">&lt;uses-permission android:name=&quot;android.permission.ACCESS_NETWORK_STATE&quot; /&gt;</span><br><span class="line">&lt;uses-permission android:name=&quot;android.permission.READ_EXTERNAL_STORAGE&quot; /&gt;</span><br></pre></td></tr></table></figure></p>
+<h1 id="2-使用vitamio的VideoView"><a href="#2-使用vitamio的VideoView" class="headerlink" title="2. 使用vitamio的VideoView"></a>2. 使用vitamio的VideoView</h1><p>这一步我建议直接参考vitamio-samlp中的VideoViewBuffer.class，播放视频最基本的内容都包含在内：<br><img src="https://upload-images.jianshu.io/upload_images/7037957-9fb531cfef60d637.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"><br>实在不行就将代码复制过去，先实现播放功能，在根据自己的需求修改。</p>
+<h1 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h1><h2 id="1-找不到-libvinit-so-文件"><a href="#1-找不到-libvinit-so-文件" class="headerlink" title="1.找不到 libvinit.so 文件"></a>1.找不到 libvinit.so 文件</h2><p>参考博客：<a href="https://www.jianshu.com/p/d08064bf6b85" target="_blank" rel="noopener">https://www.jianshu.com/p/d08064bf6b85</a><br>具体错误内容：<br>Java.lang.UnsatisfiedLinkError: dalvik.system.PathClassLoader<br>[DexPathList[[zip file “/data/app/com.pckgname.live-2/base.apk”],<br>nativeLibraryDirectories=[/data/app/com.pckgname.live-2/lib/arm64, /vendor/lib64, /system/lib64]]] couldn’t find “libvinit.so”</p>
+<p>我们注意两处，UnsatisfiedLinkError和couldn’t find “libvinit.so”。<br>是因为找不到libvinit.so，但这个文件确实在vitamio的libs文件夹下面。</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/7037957-4ec9ef2ec4b1a6b2.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=".so文件所在位置"><br>所以我们要给它指名位置，在app的gradle下加入:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">ndk &#123;</span><br><span class="line">        abiFilters &quot;armeabi&quot;, &quot;armeabi-v7a&quot;, &quot;x86&quot;, &quot;mips&quot;</span><br><span class="line">    &#125;</span><br><span class="line">sourceSets &#123;</span><br><span class="line">    main &#123;</span><br><span class="line">        jniLibs.srcDirs = [&apos;libs&apos;]</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p><img src="https://upload-images.jianshu.io/upload_images/7037957-8ebbac30e1e6b3a7.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="修改gradle"></p>
+<h2 id="2-无法在暂时无法在Android-api-23以上的版本运行"><a href="#2-无法在暂时无法在Android-api-23以上的版本运行" class="headerlink" title="2.无法在暂时无法在Android api 23以上的版本运行"></a>2.无法在暂时无法在Android api 23以上的版本运行</h2><p>参考博客：<a href="https://blog.csdn.net/kuixiaoba/article/details/51490008" target="_blank" rel="noopener">https://blog.csdn.net/kuixiaoba/article/details/51490008</a><br>解决：同时把app和vitamio中的gradle，将目标SDK版本(targetSdkVersion)调低于23就可以了，如改成21.<br><img src="https://upload-images.jianshu.io/upload_images/7037957-6cbced2cb8827cfd.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="修改targetSdkVersion"></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/android-Vitamio/" rel="tag"># android Vitamio</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/10/10/Android分页组件Paging简单使用/" rel="next" title="Android分页组件Paging简单使用">
+                <i class="fa fa-chevron-left"></i> Android分页组件Paging简单使用
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">John Doe</p>
+              <p class="site-description motion-element" itemprop="description">GtLeaf 博客</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">8</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                
+                  <span class="site-state-item-count">8</span>
+                  <span class="site-state-item-name">tags</span>
+                
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#简介"><span class="nav-number">1.</span> <span class="nav-text">简介</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#1-导入与配置"><span class="nav-number">2.</span> <span class="nav-text">1.导入与配置</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2-使用vitamio的VideoView"><span class="nav-number">3.</span> <span class="nav-text">2. 使用vitamio的VideoView</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#问题"><span class="nav-number">4.</span> <span class="nav-text">问题</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-找不到-libvinit-so-文件"><span class="nav-number">4.1.</span> <span class="nav-text">1.找不到 libvinit.so 文件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-无法在暂时无法在Android-api-23以上的版本运行"><span class="nav-number">4.2.</span> <span class="nav-text">2.无法在暂时无法在Android api 23以上的版本运行</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">John Doe</span>
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Mist</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
