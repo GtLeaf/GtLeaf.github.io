@@ -232,6 +232,128 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://gtleaf.github.io/2018/10/22/android混淆记录/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="GtLeaf.砥砺前行">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/10/22/android混淆记录/" itemprop="url">android混淆记录</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-10-22T18:45:08+08:00">
+                2018-10-22
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>最近为了增加自己app的反编译难道，也为了减少压缩包体积，所以配置了混淆规则，这里坑还是蛮多的。<br>大体上我是参考这篇博客：<a href="https://www.jianshu.com/p/b5b2a5dfaaf4" target="_blank" rel="noopener">https://www.jianshu.com/p/b5b2a5dfaaf4</a><br>并且直接复制了他的模板，对于而外的内容在这里记录</p>
+<h1 id="对实体类-bean类-避免混淆"><a href="#对实体类-bean类-避免混淆" class="headerlink" title="对实体类(bean类)避免混淆"></a>对实体类(bean类)避免混淆</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">-dontwarn com.example.pc_0775.naugthyvideo.bean.**</span><br><span class="line">-keepnames class com.example.pc_0775.naugthyvideo.bean.** &#123; *;&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="对vatimio库避免混淆"><a href="#对vatimio库避免混淆" class="headerlink" title="对vatimio库避免混淆"></a>对vatimio库避免混淆</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">-keep class io.vov.vitamio.** &#123; *; &#125;</span><br></pre></td></tr></table></figure>
+<h1 id="对EventBus避免混淆"><a href="#对EventBus避免混淆" class="headerlink" title="对EventBus避免混淆"></a>对EventBus避免混淆</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">-keepattributes *Annotation*</span><br><span class="line">-keepclassmembers class ** &#123;</span><br><span class="line">    @org.greenrobot.eventbus.Subscribe &lt;methods&gt;;</span><br><span class="line">&#125;</span><br><span class="line">-keep enum org.greenrobot.eventbus.ThreadMode &#123; *; &#125;</span><br><span class="line"></span><br><span class="line"># Only required if you use AsyncExecutor</span><br><span class="line">-keepclassmembers class * extends org.greenrobot.eventbus.util.ThrowableFailureEvent &#123;</span><br><span class="line">    &lt;init&gt;(java.lang.Throwable);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://gtleaf.github.io/2018/10/14/android多媒体——Vitamio/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -564,9 +686,17 @@ https://stackoverflow.com/questions/49028119/multiple-dex-files-define-landroid-
 <h1 id="3-向上下滑动时，动画衔接的不好"><a href="#3-向上下滑动时，动画衔接的不好" class="headerlink" title="3.向上下滑动时，动画衔接的不好"></a>3.向上下滑动时，动画衔接的不好</h1><p>原因：临界值计算公式不合理，只计算了在X轴的偏移量<br>解决：CardItemTouchHelperCallback类中的onChildDraw()里，<br>解决前代码：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">float ratio = dX / getThreshold(recyclerView, viewHolder);</span><br></pre></td></tr></table></figure></p>
 <p>解决后代码：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">float distance = (float)Math.sqrt(dX*dX+dY*dY);</span><br><span class="line">float ratio = distance / getThreshold(recyclerView, viewHolder);</span><br></pre></td></tr></table></figure></p>
 <p>变化：增加了distance变量，计算位移两点间的直线距离。</p>
-<h1 id="4-用Gilde加载网络图片时，会闪烁"><a href="#4-用Gilde加载网络图片时，会闪烁" class="headerlink" title="4.用Gilde加载网络图片时，会闪烁"></a>4.用Gilde加载网络图片时，会闪烁</h1><p>原因：可能是因为你ImageView的默认资源大小和下载资源大小不一样导致的.<br>解决办法就是你在代码里面再设置一下ImageView的大小,然后再加载图片.<br>一直以为是Gilde的问题，后来发现存在RecyclerView notifyDataSetChanged刷新闪屏问题</p>
+<h1 id="4-用Gilde加载网络图片时，会闪烁，使用本地图片时不会"><a href="#4-用Gilde加载网络图片时，会闪烁，使用本地图片时不会" class="headerlink" title="4.用Gilde加载网络图片时，会闪烁，使用本地图片时不会"></a>4.用Gilde加载网络图片时，会闪烁，使用本地图片时不会</h1><p>原因：Gilde进行加载网络图片时，会保留缓存，使用时加载完整图片，所以分辨率不同，会闪烁。<br>解决：<br>思路是类似于做一层缓存，先把图片加载好放在一个List里面，使用时直接从数组里取出来，这样子就模拟了本地图片加载。<br>具体实现如下：<br>在adaputer中声明两个数组<br>`<br>//图片的URL<br>private List<string> imgUrlList = new ArrayList&lt;&gt;();<br>//缓存数组<br>private List<glidedrawable> glideDrawableList = new ArrayList&lt;&gt;();</glidedrawable></string></p>
+<p>//glideDrawableList的访问方法，imgUrlList通过构造函数传入，不需要get,set<br>    public List<glidedrawable> getGlideDrawableList() {<br>        return glideDrawableList;<br>    }</glidedrawable></p>
+<pre><code>public void setGlideDrawableList(List&lt;GlideDrawable&gt; glideDrawableList) {
+    this.glideDrawableList = glideDrawableList;
+}
+</code></pre><p>`<br>之后创建一个updateGlideDrawableList()方法，用于请求网络图片，CardConfig.DEFAULT_SHOW_ITEM是显示的卡片数量，CardConfig.DEFAULT_CACHE_ITEM是而外的缓存数量，为了防止用户滑动太快，网络请求速度跟不上。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">public void updateGlideDrawableList()&#123;</span><br><span class="line">    //每次最多循环的次数i&lt;卡片显示数量+额外缓存数量</span><br><span class="line">    for (int i = mCardShowInfoBeanList.size(); i &lt; CardConfig.DEFAULT_SHOW_ITEM+CardConfig.DEFAULT_CACHE_ITEM; i++)&#123;</span><br><span class="line">        //防止list为空</span><br><span class="line">        if(imgUrlList.size() &lt;= 0)&#123;</span><br><span class="line">           return;</span><br><span class="line">        &#125;</span><br><span class="line">        //依次去除所有的url</span><br><span class="line">        String url = imgUrlList.remove(0);</span><br><span class="line">        //使用Gilde请求网络图片</span><br><span class="line">        Glide.with(mContext)</span><br><span class="line">                    .load(url)</span><br><span class="line">                    //Gilde将图片剪裁成336,326</span><br><span class="line">                    .into(new SimpleTarget&lt;GlideDrawable&gt;(336, 326) &#123;</span><br><span class="line">                        @Override</span><br><span class="line">                        public void onResourceReady(GlideDrawable resource, GlideAnimation&lt;? super GlideDrawable&gt; glideAnimation) &#123;</span><br><span class="line">                            //将图片资源放入缓存数组</span><br><span class="line">                            glideDrawableList.add(resource);</span><br><span class="line">                            //通知adapter数据已经更新，刷新显示。</span><br><span class="line">                            AdapterCardSwipeLive.this.notifyDataSetChanged();</span><br><span class="line">                        &#125;</span><br><span class="line">                    &#125;);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>之后只要在imgUrlList传入之后，onBindViewHolder()之前使用该方法就好了，这里我选择在构造函数里调用:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">public Adapter(Context context, List imgUrlList)&#123;</span><br><span class="line">        this.imgUrlList = imgUrlList;</span><br><span class="line">        this.mContext = context;</span><br><span class="line">        //我选择今早的调用此方法，减少用户的等待时间</span><br><span class="line">        updateGlideDrawableList();</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure></p>
+<p>到这里，核心代码就已经写完了，接下来只需要将之前使ItemTouchHelperCallback中操作imgUrlList的地方进行一些修改，替换成glideDrawableList就可以了:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">//替换前</span><br><span class="line">T remove = adaputer.getList().remove(layoutPosition);</span><br><span class="line">adapter.notifyDataSetChanged();</span><br><span class="line"></span><br><span class="line">//替换后</span><br><span class="line">T remove = ((List&lt;T&gt;) adapterCardSwipeLive.getmCardShowInfoBeanList()).remove(layoutPosition);</span><br><span class="line">//调用这个方法以补充被remove掉的GlideDrawable</span><br><span class="line">updateGlideDrawableList();</span><br><span class="line">adapter.notifyDataSetChanged();</span><br></pre></td></tr></table></figure></p>
+<p>这样子就完成了，使用时，传进adaputer来的只有imgUrlList，然后adapter向外只提供一个glideDrawableList，外面也只能对glideDrawableList进行增删改查。同时每删除glideDrawableList中的一个元素，再通过updateGlideDrawableList()添加回来，就能实现尽可能少的缓存。这里只是提供一个思路，代码不一定能毫无错误的运行出来，需要自己进行适配。</p>
 <h1 id="拓展"><a href="#拓展" class="headerlink" title="拓展"></a>拓展</h1><p>如果你搜索卡片层叠效果，你会发现更多更详细的内容</p>
-<h1 id="总结："><a href="#总结：" class="headerlink" title="总结："></a>总结：</h1><p>折腾了好久也无法像探探那样流畅，只能朝四个方向滑出，而不能360°滑出。<br>流畅度效果也有不少差距，可见自己水平还有待提高。</p>
+<h1 id="总结："><a href="#总结：" class="headerlink" title="总结："></a>总结：</h1><p>折腾了好久也无法像探探那样流畅，只能朝四个方向滑出，而不能360°滑出，<br>流畅度效果也有不少差距。<br>应该是实现思路的不同，我是基于recyclerView实现的，比较简单，另一种基于ListView实现的比较复杂，但效果很好。可见自己水平还有待提高。</p>
 <h1 id="相关代码："><a href="#相关代码：" class="headerlink" title="相关代码："></a>相关代码：</h1><h2 id="item-card-slide-xml"><a href="#item-card-slide-xml" class="headerlink" title="item_card_slide.xml"></a>item_card_slide.xml</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br></pre></td><td class="code"><pre><span class="line">&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;</span><br><span class="line">&lt;RelativeLayout</span><br><span class="line">    xmlns:android=&quot;http://schemas.android.com/apk/res/android&quot;</span><br><span class="line">    xmlns:app=&quot;http://schemas.android.com/apk/res-auto&quot;</span><br><span class="line">    android:layout_width=&quot;336dp&quot;</span><br><span class="line">    android:layout_height=&quot;426dp&quot;&gt;</span><br><span class="line"></span><br><span class="line">    &lt;android.support.v7.widget.CardView</span><br><span class="line">        android:layout_width=&quot;match_parent&quot;</span><br><span class="line">        android:layout_height=&quot;match_parent&quot;</span><br><span class="line">        app:cardCornerRadius=&quot;7.5dp&quot;</span><br><span class="line">        app:cardElevation=&quot;1dp&quot;</span><br><span class="line">        app:cardUseCompatPadding=&quot;true&quot;&gt;</span><br><span class="line"></span><br><span class="line">        &lt;LinearLayout</span><br><span class="line">            android:layout_width=&quot;match_parent&quot;</span><br><span class="line">            android:layout_height=&quot;match_parent&quot;</span><br><span class="line">            android:background=&quot;#ffffff&quot;</span><br><span class="line">            android:orientation=&quot;vertical&quot;&gt;</span><br><span class="line"></span><br><span class="line">            &lt;RelativeLayout</span><br><span class="line">                android:layout_width=&quot;match_parent&quot;</span><br><span class="line">                android:layout_height=&quot;0dp&quot;</span><br><span class="line">                android:layout_weight=&quot;1&quot;&gt;</span><br><span class="line"></span><br><span class="line">                &lt;ImageView</span><br><span class="line">                    android:id=&quot;@+id/iv_avatar&quot;</span><br><span class="line">                    android:layout_width=&quot;match_parent&quot;</span><br><span class="line">                    android:layout_height=&quot;match_parent&quot;</span><br><span class="line">                    android:scaleType=&quot;centerCrop&quot;</span><br><span class="line">                    android:background=&quot;@color/pink&quot;/&gt;</span><br><span class="line"></span><br><span class="line">                &lt;ImageView</span><br><span class="line">                    android:id=&quot;@+id/iv_dislike&quot;</span><br><span class="line">                    android:layout_width=&quot;wrap_content&quot;</span><br><span class="line">                    android:layout_height=&quot;wrap_content&quot;</span><br><span class="line">                    android:layout_alignParentRight=&quot;true&quot;</span><br><span class="line">                    android:layout_marginRight=&quot;15dp&quot;</span><br><span class="line">                    android:layout_marginTop=&quot;15dp&quot;</span><br><span class="line">                    android:alpha=&quot;0&quot;</span><br><span class="line">                    android:background=&quot;@color/blue&quot;/&gt;</span><br><span class="line"></span><br><span class="line">                &lt;ImageView</span><br><span class="line">                    android:id=&quot;@+id/iv_like&quot;</span><br><span class="line">                    android:layout_width=&quot;wrap_content&quot;</span><br><span class="line">                    android:layout_height=&quot;wrap_content&quot;</span><br><span class="line">                    android:layout_alignParentRight=&quot;true&quot;</span><br><span class="line">                    android:layout_marginRight=&quot;15dp&quot;</span><br><span class="line">                    android:layout_marginTop=&quot;15dp&quot;</span><br><span class="line">                    android:alpha=&quot;0&quot;</span><br><span class="line">                    android:background=&quot;@color/grey&quot;/&gt;</span><br><span class="line"></span><br><span class="line">            &lt;/RelativeLayout&gt;</span><br><span class="line">            &lt;RelativeLayout</span><br><span class="line">                android:layout_width=&quot;match_parent&quot;</span><br><span class="line">                android:layout_height=&quot;100dp&quot;</span><br><span class="line">                android:paddingLeft=&quot;14dp&quot;</span><br><span class="line">                android:paddingTop=&quot;15dp&quot;&gt;</span><br><span class="line">                &lt;TextView</span><br><span class="line">                    android:id=&quot;@+id/tv_name&quot;</span><br><span class="line">                    android:layout_width=&quot;wrap_content&quot;</span><br><span class="line">                    android:layout_height=&quot;wrap_content&quot;</span><br><span class="line">                    android:gravity=&quot;center&quot;</span><br><span class="line">                    android:text=&quot;小姐姐&quot;</span><br><span class="line">                    android:textColor=&quot;@android:color/black&quot;</span><br><span class="line">                    android:textSize=&quot;16sp&quot; /&gt;</span><br><span class="line"></span><br><span class="line">                &lt;TextView</span><br><span class="line">                    android:id=&quot;@+id/tv_age&quot;</span><br><span class="line">                    android:layout_width=&quot;wrap_content&quot;</span><br><span class="line">                    android:layout_height=&quot;wrap_content&quot;</span><br><span class="line">                    android:layout_below=&quot;@id/tv_name&quot;</span><br><span class="line">                    android:layout_marginTop=&quot;5dp&quot;</span><br><span class="line">                    android:background=&quot;@color/pink&quot;</span><br><span class="line">                    android:gravity=&quot;center&quot;</span><br><span class="line">                    android:text=&quot;♀ 23&quot;</span><br><span class="line">                    android:textColor=&quot;#FFFFFF&quot;</span><br><span class="line">                    android:textSize=&quot;14sp&quot; /&gt;</span><br><span class="line"></span><br><span class="line">                &lt;TextView</span><br><span class="line">                    android:id=&quot;@+id/tv_constellation&quot;</span><br><span class="line">                    android:layout_width=&quot;wrap_content&quot;</span><br><span class="line">                    android:layout_height=&quot;wrap_content&quot;</span><br><span class="line">                    android:layout_below=&quot;@id/tv_name&quot;</span><br><span class="line">                    android:layout_marginLeft=&quot;4dp&quot;</span><br><span class="line">                    android:layout_marginTop=&quot;5dp&quot;</span><br><span class="line">                    android:layout_toRightOf=&quot;@id/tv_age&quot;</span><br><span class="line">                    android:background=&quot;@color/olivedrab&quot;</span><br><span class="line">                    android:gravity=&quot;center&quot;</span><br><span class="line">                    android:text=&quot;狮子座&quot;</span><br><span class="line">                    android:textColor=&quot;#FFFFFF&quot;</span><br><span class="line">                    android:textSize=&quot;14sp&quot; /&gt;</span><br><span class="line"></span><br><span class="line">                &lt;TextView</span><br><span class="line">                    android:layout_width=&quot;wrap_content&quot;</span><br><span class="line">                    android:layout_height=&quot;wrap_content&quot;</span><br><span class="line">                    android:layout_below=&quot;@id/tv_age&quot;</span><br><span class="line">                    android:layout_marginTop=&quot;5dp&quot;</span><br><span class="line">                    android:gravity=&quot;center&quot;</span><br><span class="line">                    android:text=&quot;IT/互联网&quot;</span><br><span class="line">                    android:textColor=&quot;#cbcbcb&quot; /&gt;</span><br><span class="line"></span><br><span class="line">            &lt;/RelativeLayout&gt;</span><br><span class="line">        &lt;/LinearLayout&gt;</span><br><span class="line">    &lt;/android.support.v7.widget.CardView&gt;</span><br><span class="line"></span><br><span class="line">&lt;/RelativeLayout&gt;</span><br></pre></td></tr></table></figure>
           
         
@@ -1288,7 +1418,7 @@ https://stackoverflow.com/questions/49028119/multiple-dex-files-define-landroid-
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">8</span>
+                  <span class="site-state-item-count">9</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
@@ -1301,7 +1431,7 @@ https://stackoverflow.com/questions/49028119/multiple-dex-files-define-landroid-
               
               <div class="site-state-item site-state-tags">
                 
-                  <span class="site-state-item-count">8</span>
+                  <span class="site-state-item-count">9</span>
                   <span class="site-state-item-name">tags</span>
                 
               </div>

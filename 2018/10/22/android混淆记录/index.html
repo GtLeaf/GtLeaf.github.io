@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="Paging," />
+  <meta name="keywords" content="混淆," />
 
 
 
@@ -79,18 +79,18 @@
 
 
 
-<meta name="description" content="Paging库引入：implementation &amp;#39;android.arch.paging:runtime:1.0.0&amp;#39;刚引入就遇到了错误，真是一个不友好的开始:12Error:Execution failed for task &amp;apos;:app:transformDexArchiveWithExternalLibsDexMergerForDebug&amp;apos;.&amp;gt; ja">
-<meta name="keywords" content="Paging">
+<meta name="description" content="最近为了增加自己app的反编译难道，也为了减少压缩包体积，所以配置了混淆规则，这里坑还是蛮多的。大体上我是参考这篇博客：https://www.jianshu.com/p/b5b2a5dfaaf4并且直接复制了他的模板，对于而外的内容在这里记录 对实体类(bean类)避免混淆12-dontwarn com.example.pc_0775.naugthyvideo.bean.**-keepnames">
+<meta name="keywords" content="混淆">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Android分页组件Paging简单使用">
-<meta property="og:url" content="https://gtleaf.github.io/2018/10/10/Android分页组件Paging简单使用/index.html">
+<meta property="og:title" content="android混淆记录">
+<meta property="og:url" content="https://gtleaf.github.io/2018/10/22/android混淆记录/index.html">
 <meta property="og:site_name" content="GtLeaf.砥砺前行">
-<meta property="og:description" content="Paging库引入：implementation &amp;#39;android.arch.paging:runtime:1.0.0&amp;#39;刚引入就遇到了错误，真是一个不友好的开始:12Error:Execution failed for task &amp;apos;:app:transformDexArchiveWithExternalLibsDexMergerForDebug&amp;apos;.&amp;gt; ja">
+<meta property="og:description" content="最近为了增加自己app的反编译难道，也为了减少压缩包体积，所以配置了混淆规则，这里坑还是蛮多的。大体上我是参考这篇博客：https://www.jianshu.com/p/b5b2a5dfaaf4并且直接复制了他的模板，对于而外的内容在这里记录 对实体类(bean类)避免混淆12-dontwarn com.example.pc_0775.naugthyvideo.bean.**-keepnames">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2018-10-10T09:13:08.551Z">
+<meta property="og:updated_time" content="2018-10-22T11:39:12.821Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Android分页组件Paging简单使用">
-<meta name="twitter:description" content="Paging库引入：implementation &amp;#39;android.arch.paging:runtime:1.0.0&amp;#39;刚引入就遇到了错误，真是一个不友好的开始:12Error:Execution failed for task &amp;apos;:app:transformDexArchiveWithExternalLibsDexMergerForDebug&amp;apos;.&amp;gt; ja">
+<meta name="twitter:title" content="android混淆记录">
+<meta name="twitter:description" content="最近为了增加自己app的反编译难道，也为了减少压缩包体积，所以配置了混淆规则，这里坑还是蛮多的。大体上我是参考这篇博客：https://www.jianshu.com/p/b5b2a5dfaaf4并且直接复制了他的模板，对于而外的内容在这里记录 对实体类(bean类)避免混淆12-dontwarn com.example.pc_0775.naugthyvideo.bean.**-keepnames">
 
 
 
@@ -120,13 +120,13 @@
 
 
 
-  <link rel="canonical" href="https://gtleaf.github.io/2018/10/10/Android分页组件Paging简单使用/"/>
+  <link rel="canonical" href="https://gtleaf.github.io/2018/10/22/android混淆记录/"/>
 
 
 
 
 
-  <title>Android分页组件Paging简单使用 | GtLeaf.砥砺前行</title>
+  <title>android混淆记录 | GtLeaf.砥砺前行</title>
   
 
 
@@ -233,7 +233,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://gtleaf.github.io/2018/10/10/Android分页组件Paging简单使用/">
+    <link itemprop="mainEntityOfPage" href="https://gtleaf.github.io/2018/10/22/android混淆记录/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="John Doe">
@@ -250,7 +250,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">Android分页组件Paging简单使用</h1>
+          <h1 class="post-title" itemprop="name headline">android混淆记录</h1>
         
 
         <div class="post-meta">
@@ -262,8 +262,8 @@
               
                 <span class="post-meta-item-text">Posted on</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-10-10T17:03:23+08:00">
-                2018-10-10
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-10-22T18:45:08+08:00">
+                2018-10-22
               </time>
             
 
@@ -300,12 +300,10 @@
       
 
       
-        <h1 id="Paging库引入："><a href="#Paging库引入：" class="headerlink" title="Paging库引入："></a>Paging库引入：</h1><p><code>implementation &#39;android.arch.paging:runtime:1.0.0&#39;</code><br>刚引入就遇到了错误，真是一个不友好的开始:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Error:Execution failed for task &apos;:app:transformDexArchiveWithExternalLibsDexMergerForDebug&apos;.</span><br><span class="line">&gt; java.lang.RuntimeException: java.lang.RuntimeException: com.android.builder.dexing.DexArchiveMergerException: Unable to merge dex</span><br></pre></td></tr></table></figure></p>
-<p>一查资料，是导入重复的包，这个出错的地方还是google自己的东西，这岂不是<br>“大水冲了龙王庙，自家人打自家人”？<br>`<br>compile ‘com.android.support:design:26.1.0’</p>
-<p><code>google了一下，在stackoverflow中找到了解决办法：
-https://stackoverflow.com/questions/49028119/multiple-dex-files-define-landroid-support-design-widget-coordinatorlayoutlayou
-即用编译版本改成27，并且把对应的库版本也改为27</code><br>implementation ‘com.android.support:appcompat-v7:27.1.1’<br><code></code><br>compile ‘com.android.support:design:27.1.1’<br>`</p>
-
+        <p>最近为了增加自己app的反编译难道，也为了减少压缩包体积，所以配置了混淆规则，这里坑还是蛮多的。<br>大体上我是参考这篇博客：<a href="https://www.jianshu.com/p/b5b2a5dfaaf4" target="_blank" rel="noopener">https://www.jianshu.com/p/b5b2a5dfaaf4</a><br>并且直接复制了他的模板，对于而外的内容在这里记录</p>
+<h1 id="对实体类-bean类-避免混淆"><a href="#对实体类-bean类-避免混淆" class="headerlink" title="对实体类(bean类)避免混淆"></a>对实体类(bean类)避免混淆</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">-dontwarn com.example.pc_0775.naugthyvideo.bean.**</span><br><span class="line">-keepnames class com.example.pc_0775.naugthyvideo.bean.** &#123; *;&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="对vatimio库避免混淆"><a href="#对vatimio库避免混淆" class="headerlink" title="对vatimio库避免混淆"></a>对vatimio库避免混淆</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">-keep class io.vov.vitamio.** &#123; *; &#125;</span><br></pre></td></tr></table></figure>
+<h1 id="对EventBus避免混淆"><a href="#对EventBus避免混淆" class="headerlink" title="对EventBus避免混淆"></a>对EventBus避免混淆</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">-keepattributes *Annotation*</span><br><span class="line">-keepclassmembers class ** &#123;</span><br><span class="line">    @org.greenrobot.eventbus.Subscribe &lt;methods&gt;;</span><br><span class="line">&#125;</span><br><span class="line">-keep enum org.greenrobot.eventbus.ThreadMode &#123; *; &#125;</span><br><span class="line"></span><br><span class="line"># Only required if you use AsyncExecutor</span><br><span class="line">-keepclassmembers class * extends org.greenrobot.eventbus.util.ThrowableFailureEvent &#123;</span><br><span class="line">    &lt;init&gt;(java.lang.Throwable);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
       
     </div>
     
@@ -322,7 +320,7 @@ https://stackoverflow.com/questions/49028119/multiple-dex-files-define-landroid-
       
         <div class="post-tags">
           
-            <a href="/tags/Paging/" rel="tag"># Paging</a>
+            <a href="/tags/混淆/" rel="tag"># 混淆</a>
           
         </div>
       
@@ -335,8 +333,8 @@ https://stackoverflow.com/questions/49028119/multiple-dex-files-define-landroid-
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2018/10/07/实现探探滑动功能/" rel="next" title="RecyclerView实现探探卡片滑动功能">
-                <i class="fa fa-chevron-left"></i> RecyclerView实现探探卡片滑动功能
+              <a href="/2018/10/14/android多媒体——Vitamio/" rel="next" title="android多媒体——Vitamio">
+                <i class="fa fa-chevron-left"></i> android多媒体——Vitamio
               </a>
             
           </div>
@@ -344,10 +342,6 @@ https://stackoverflow.com/questions/49028119/multiple-dex-files-define-landroid-
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2018/10/14/android多媒体——Vitamio/" rel="prev" title="android多媒体——Vitamio">
-                android多媒体——Vitamio <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -470,7 +464,7 @@ https://stackoverflow.com/questions/49028119/multiple-dex-files-define-landroid-
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Paging库引入："><span class="nav-number">1.</span> <span class="nav-text">Paging库引入：</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#对实体类-bean类-避免混淆"><span class="nav-number">1.</span> <span class="nav-text">对实体类(bean类)避免混淆</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#对vatimio库避免混淆"><span class="nav-number">2.</span> <span class="nav-text">对vatimio库避免混淆</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#对EventBus避免混淆"><span class="nav-number">3.</span> <span class="nav-text">对EventBus避免混淆</span></a></li></ol></div>
             
 
           </div>
