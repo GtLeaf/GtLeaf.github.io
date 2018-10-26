@@ -89,7 +89,8 @@
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="https://i.postimg.cc/VkRn0SyD/Card_View_border.jpg">
 <meta property="og:image" content="https://i.postimg.cc/66mHTmVy/Card_View.jpg">
-<meta property="og:updated_time" content="2018-10-22T11:31:10.776Z">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/7037957-a439cbe6c5b9437e.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:updated_time" content="2018-10-22T11:49:08.131Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="RecyclerView实现探探卡片滑动功能">
 <meta name="twitter:description" content="代码实现博客地址：https://blog.csdn.net/qq_39085422/article/details/78612132我只掌握了RecyclerView基础用法，所以参考别人博客的代码实现。我使用CardView代替RoundImageView实现圆角效果。 遇到的问题1.CardView阴影显示不完全原因：将CardView作为最外层布局，可能是两个CardView重叠时，边界会">
@@ -309,7 +310,7 @@
 <h1 id="3-向上下滑动时，动画衔接的不好"><a href="#3-向上下滑动时，动画衔接的不好" class="headerlink" title="3.向上下滑动时，动画衔接的不好"></a>3.向上下滑动时，动画衔接的不好</h1><p>原因：临界值计算公式不合理，只计算了在X轴的偏移量<br>解决：CardItemTouchHelperCallback类中的onChildDraw()里，<br>解决前代码：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">float ratio = dX / getThreshold(recyclerView, viewHolder);</span><br></pre></td></tr></table></figure></p>
 <p>解决后代码：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">float distance = (float)Math.sqrt(dX*dX+dY*dY);</span><br><span class="line">float ratio = distance / getThreshold(recyclerView, viewHolder);</span><br></pre></td></tr></table></figure></p>
 <p>变化：增加了distance变量，计算位移两点间的直线距离。</p>
-<h1 id="4-用Gilde加载网络图片时，会闪烁，使用本地图片时不会"><a href="#4-用Gilde加载网络图片时，会闪烁，使用本地图片时不会" class="headerlink" title="4.用Gilde加载网络图片时，会闪烁，使用本地图片时不会"></a>4.用Gilde加载网络图片时，会闪烁，使用本地图片时不会</h1><p>原因：Gilde进行加载网络图片时，会保留缓存，使用时加载完整图片，所以分辨率不同，会闪烁。<br>解决：<br>思路是类似于做一层缓存，先把图片加载好放在一个List里面，使用时直接从数组里取出来，这样子就模拟了本地图片加载。<br>具体实现如下：<br>在adaputer中声明两个数组<br>`<br>//图片的URL<br>private List<string> imgUrlList = new ArrayList&lt;&gt;();<br>//缓存数组<br>private List<glidedrawable> glideDrawableList = new ArrayList&lt;&gt;();</glidedrawable></string></p>
+<h1 id="4-用Gilde加载网络图片时，会闪烁，使用本地图片时不会"><a href="#4-用Gilde加载网络图片时，会闪烁，使用本地图片时不会" class="headerlink" title="4.用Gilde加载网络图片时，会闪烁，使用本地图片时不会"></a>4.用Gilde加载网络图片时，会闪烁，使用本地图片时不会</h1><p><img src="https://upload-images.jianshu.io/upload_images/7037957-a439cbe6c5b9437e.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="图片闪烁.jpg"><br>原因：Gilde进行加载网络图片时，会保留缓存，使用时加载完整图片，所以分辨率不同，会闪烁。<br>解决：<br>思路是类似于做一层缓存，先把图片加载好放在一个List里面，使用时直接从数组里取出来，这样子就模拟了本地图片加载。<br>具体实现如下：<br>在adaputer中声明两个数组<br>`<br>//图片的URL<br>private List<string> imgUrlList = new ArrayList&lt;&gt;();<br>//缓存数组<br>private List<glidedrawable> glideDrawableList = new ArrayList&lt;&gt;();</glidedrawable></string></p>
 <p>//glideDrawableList的访问方法，imgUrlList通过构造函数传入，不需要get,set<br>    public List<glidedrawable> getGlideDrawableList() {<br>        return glideDrawableList;<br>    }</glidedrawable></p>
 <pre><code>public void setGlideDrawableList(List&lt;GlideDrawable&gt; glideDrawableList) {
     this.glideDrawableList = glideDrawableList;

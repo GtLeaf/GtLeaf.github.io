@@ -79,18 +79,20 @@
 
 
 
-<meta name="description" content="Paging库引入：implementation &amp;#39;android.arch.paging:runtime:1.0.0&amp;#39;刚引入就遇到了错误，真是一个不友好的开始:12Error:Execution failed for task &amp;apos;:app:transformDexArchiveWithExternalLibsDexMergerForDebug&amp;apos;.&amp;gt; ja">
+<meta name="description" content="1.简介：Paging组件是Google新推出的分页组件，可以轻松帮助开发者实现RecyclerView中分页加载功能。本文先开坑，等以后用到在详细写明。推荐博客：https://www.jianshu.com/p/1bfec9b9612c 2.Paging库引入：implementation &amp;#39;android.arch.paging:runtime:1.0.0&amp;#39;刚引入就遇到了错误">
 <meta name="keywords" content="Paging">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Android分页组件Paging简单使用">
 <meta property="og:url" content="https://gtleaf.github.io/2018/10/10/Android分页组件Paging简单使用/index.html">
 <meta property="og:site_name" content="GtLeaf.砥砺前行">
-<meta property="og:description" content="Paging库引入：implementation &amp;#39;android.arch.paging:runtime:1.0.0&amp;#39;刚引入就遇到了错误，真是一个不友好的开始:12Error:Execution failed for task &amp;apos;:app:transformDexArchiveWithExternalLibsDexMergerForDebug&amp;apos;.&amp;gt; ja">
+<meta property="og:description" content="1.简介：Paging组件是Google新推出的分页组件，可以轻松帮助开发者实现RecyclerView中分页加载功能。本文先开坑，等以后用到在详细写明。推荐博客：https://www.jianshu.com/p/1bfec9b9612c 2.Paging库引入：implementation &amp;#39;android.arch.paging:runtime:1.0.0&amp;#39;刚引入就遇到了错误">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2018-10-10T09:13:08.551Z">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/7037957-133babd8949f7752.gif?imageMogr2/auto-orient/strip">
+<meta property="og:updated_time" content="2018-10-26T06:38:17.602Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Android分页组件Paging简单使用">
-<meta name="twitter:description" content="Paging库引入：implementation &amp;#39;android.arch.paging:runtime:1.0.0&amp;#39;刚引入就遇到了错误，真是一个不友好的开始:12Error:Execution failed for task &amp;apos;:app:transformDexArchiveWithExternalLibsDexMergerForDebug&amp;apos;.&amp;gt; ja">
+<meta name="twitter:description" content="1.简介：Paging组件是Google新推出的分页组件，可以轻松帮助开发者实现RecyclerView中分页加载功能。本文先开坑，等以后用到在详细写明。推荐博客：https://www.jianshu.com/p/1bfec9b9612c 2.Paging库引入：implementation &amp;#39;android.arch.paging:runtime:1.0.0&amp;#39;刚引入就遇到了错误">
+<meta name="twitter:image" content="https://upload-images.jianshu.io/upload_images/7037957-133babd8949f7752.gif?imageMogr2/auto-orient/strip">
 
 
 
@@ -300,11 +302,19 @@
       
 
       
-        <h1 id="Paging库引入："><a href="#Paging库引入：" class="headerlink" title="Paging库引入："></a>Paging库引入：</h1><p><code>implementation &#39;android.arch.paging:runtime:1.0.0&#39;</code><br>刚引入就遇到了错误，真是一个不友好的开始:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Error:Execution failed for task &apos;:app:transformDexArchiveWithExternalLibsDexMergerForDebug&apos;.</span><br><span class="line">&gt; java.lang.RuntimeException: java.lang.RuntimeException: com.android.builder.dexing.DexArchiveMergerException: Unable to merge dex</span><br></pre></td></tr></table></figure></p>
-<p>一查资料，是导入重复的包，这个出错的地方还是google自己的东西，这岂不是<br>“大水冲了龙王庙，自家人打自家人”？<br>`<br>compile ‘com.android.support:design:26.1.0’</p>
-<p><code>google了一下，在stackoverflow中找到了解决办法：
-https://stackoverflow.com/questions/49028119/multiple-dex-files-define-landroid-support-design-widget-coordinatorlayoutlayou
-即用编译版本改成27，并且把对应的库版本也改为27</code><br>implementation ‘com.android.support:appcompat-v7:27.1.1’<br><code></code><br>compile ‘com.android.support:design:27.1.1’<br>`</p>
+        <h1 id="1-简介："><a href="#1-简介：" class="headerlink" title="1.简介："></a>1.简介：</h1><p>Paging组件是Google新推出的分页组件，可以轻松帮助开发者实现RecyclerView中分页加载功能。<br>本文先开坑，等以后用到在详细写明。<br>推荐博客：<a href="https://www.jianshu.com/p/1bfec9b9612c" target="_blank" rel="noopener">https://www.jianshu.com/p/1bfec9b9612c</a></p>
+<h1 id="2-Paging库引入："><a href="#2-Paging库引入：" class="headerlink" title="2.Paging库引入："></a>2.Paging库引入：</h1><p><code>implementation &#39;android.arch.paging:runtime:1.0.0&#39;</code><br>刚引入就遇到了错误，真是一个不友好的开始:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Error:Execution failed for task &apos;:app:transformDexArchiveWithExternalLibsDexMergerForDebug&apos;.</span><br><span class="line">&gt; java.lang.RuntimeException: java.lang.RuntimeException: com.android.builder.dexing.DexArchiveMergerException: Unable to merge dex</span><br></pre></td></tr></table></figure></p>
+<p>一查资料，是导入重复的包，这个出错的地方还是google自己的东西，这岂不是<br>“大水冲了龙王庙，自家人打自家人”？<br><code>compile &#39;com.android.support:design:26.1.0&#39;</code><br>google了一下，在stackoverflow中找到了解决办法：<br><a href="https://stackoverflow.com/questions/49028119/multiple-dex-files-define-landroid-support-design-widget-coordinatorlayoutlayou" target="_blank" rel="noopener">https://stackoverflow.com/questions/49028119/multiple-dex-files-define-landroid-support-design-widget-coordinatorlayoutlayou</a><br>即用编译版本改成27，并且把对应的库版本也改为27<br><code>implementation &#39;com.android.support:appcompat-v7:27.1.1&#39;</code><br><code>compile &#39;com.android.support:design:27.1.1&#39;</code><br>问题了解决了，接下来我们看看他的工作原理</p>
+<h1 id="3-工作原理"><a href="#3-工作原理" class="headerlink" title="3.工作原理"></a>3.工作原理</h1><p><img src="https://upload-images.jianshu.io/upload_images/7037957-133babd8949f7752.gif?imageMogr2/auto-orient/strip" alt="PagingWork.gif"></p>
+<p>这是官方提供的原理图，</p>
+<p>先来看Adapter<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line">public class AdapterPaging extends PagedListAdapter&lt;VideoInfo, AdapterPaging.ViewHolder&gt; &#123;</span><br><span class="line"></span><br><span class="line">    private Context mContext;</span><br><span class="line"></span><br><span class="line">    public static final DiffUtil.ItemCallback&lt;VideoInfo&gt; mDiffCallback = new AdapterPaging.VideoInfoItemCallback();</span><br><span class="line"></span><br><span class="line">    protected AdapterPaging() &#123;</span><br><span class="line">        super(mDiffCallback);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @NonNull</span><br><span class="line">    @Override</span><br><span class="line">    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) &#123;</span><br><span class="line">        return null;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    public void onBindViewHolder(@NonNull ViewHolder holder, int position) &#123;</span><br><span class="line">        VideoInfo videoInfo = getItem(position);</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    static class ViewHolder extends RecyclerView.ViewHolder&#123;</span><br><span class="line"></span><br><span class="line">        private LinearLayout ll_videoInfo;</span><br><span class="line"></span><br><span class="line">        public ViewHolder(View itemView) &#123;</span><br><span class="line">            super(itemView);</span><br><span class="line">            ll_videoInfo = itemView.findViewById(R.id.ll_video_info);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    </span><br><span class="line">    private static class VideoInfoItemCallback extends DiffUtil.ItemCallback&lt;VideoInfo&gt;&#123;</span><br><span class="line">        @Override</span><br><span class="line">        public boolean areItemsTheSame(VideoInfo oldItem, VideoInfo newItem) &#123;</span><br><span class="line">            return oldItem.getUrl() == newItem.getUrl();</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        @Override</span><br><span class="line">        public boolean areContentsTheSame(VideoInfo oldItem, VideoInfo newItem) &#123;</span><br><span class="line">            return (oldItem == newItem);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>大致的4个不同如下：</p>
+<ol>
+<li>Adapter不再继承自RecyclerView.Adapter，改为继承自PagedListAdapter，因为PagedListAdapter就是RecyclerView.Adapter的一个子类。</li>
+<li>定义内部回调接口VideoInfoItemCallback继承自DiffUtil.ItemCallback<videoinfo>，并且实例化一个父类引用指向子类(VideoInfoItemCallback)对象<br><code>public static final DiffUtil.ItemCallback&lt;VideoInfo&gt; mDiffCallback = new AdapterPaging.VideoInfoItemCallback();</code></videoinfo></li>
+<li>重写构造方法，无需参数传入，调用父类构造方法将mDiffCallback传入。</li>
+<li>通onBindViewHolder中过调用getItem(position);获得指定位置的数据对象。<br>因为Adapter中不再需要维护一个数据List了，PagedListAdapter中已经维护有，并且提供getItem()方法访问。</li>
+</ol>
 
       
     </div>
@@ -470,7 +480,7 @@ https://stackoverflow.com/questions/49028119/multiple-dex-files-define-landroid-
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Paging库引入："><span class="nav-number">1.</span> <span class="nav-text">Paging库引入：</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#1-简介："><span class="nav-number">1.</span> <span class="nav-text">1.简介：</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2-Paging库引入："><span class="nav-number">2.</span> <span class="nav-text">2.Paging库引入：</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#3-工作原理"><span class="nav-number">3.</span> <span class="nav-text">3.工作原理</span></a></li></ol></div>
             
 
           </div>
