@@ -1,0 +1,688 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-CN">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="TextView 展开 收起," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="1.简介长文本的“展开/收起”功能是一个十分常见且实用的功能，今天我们就来简单粗暴的实现一下。既然是简单的实现，那就只有核心思路，理解后可以自由封装。参考博客：https://blog.csdn.net/qq_28695619/article/details/72857907 2.实现思路这个功能的实现方法有很多，这里选用SpannableString来实现，SpannableString有一个很">
+<meta name="keywords" content="TextView 展开 收起">
+<meta property="og:type" content="article">
+<meta property="og:title" content="简单实现实用小功能——TextView“展开&#x2F;收起”功能">
+<meta property="og:url" content="https://gtleaf.github.io/2018/12/21/简单实现实用小功能——TextView“展开-收起”功能/index.html">
+<meta property="og:site_name" content="GtLeaf.砥砺前行">
+<meta property="og:description" content="1.简介长文本的“展开/收起”功能是一个十分常见且实用的功能，今天我们就来简单粗暴的实现一下。既然是简单的实现，那就只有核心思路，理解后可以自由封装。参考博客：https://blog.csdn.net/qq_28695619/article/details/72857907 2.实现思路这个功能的实现方法有很多，这里选用SpannableString来实现，SpannableString有一个很">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/7037957-d2f109ba3aa8445a.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:updated_time" content="2018-12-21T09:42:08.694Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="简单实现实用小功能——TextView“展开&#x2F;收起”功能">
+<meta name="twitter:description" content="1.简介长文本的“展开/收起”功能是一个十分常见且实用的功能，今天我们就来简单粗暴的实现一下。既然是简单的实现，那就只有核心思路，理解后可以自由封装。参考博客：https://blog.csdn.net/qq_28695619/article/details/72857907 2.实现思路这个功能的实现方法有很多，这里选用SpannableString来实现，SpannableString有一个很">
+<meta name="twitter:image" content="https://upload-images.jianshu.io/upload_images/7037957-d2f109ba3aa8445a.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://gtleaf.github.io/2018/12/21/简单实现实用小功能——TextView“展开-收起”功能/"/>
+
+
+
+
+
+  <title>简单实现实用小功能——TextView“展开/收起”功能 | GtLeaf.砥砺前行</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">GtLeaf.砥砺前行</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">今天是谁叫我起床？</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Archives
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://gtleaf.github.io/2018/12/21/简单实现实用小功能——TextView“展开-收起”功能/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="GtLeaf.砥砺前行">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">简单实现实用小功能——TextView“展开/收起”功能</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-12-21T16:16:57+08:00">
+                2018-12-21
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="1-简介"><a href="#1-简介" class="headerlink" title="1.简介"></a>1.简介</h1><p>长文本的“展开/收起”功能是一个十分常见且实用的功能，今天我们就来简单粗暴的实现一下。<br>既然是简单的实现，那就只有核心思路，理解后可以自由封装。<br>参考博客：<a href="https://blog.csdn.net/qq_28695619/article/details/72857907" target="_blank" rel="noopener">https://blog.csdn.net/qq_28695619/article/details/72857907</a></p>
+<h1 id="2-实现思路"><a href="#2-实现思路" class="headerlink" title="2.实现思路"></a>2.实现思路</h1><p>这个功能的实现方法有很多，这里选用SpannableString来实现，SpannableString有一个很好用的方法————setSpan()。<br>具体可以看这篇博客：<a href="https://blog.csdn.net/gxp1182893781/article/details/76916796" target="_blank" rel="noopener">https://blog.csdn.net/gxp1182893781/article/details/76916796</a><br>这个方法的好处在于，可以为指定区域的文字设置特定的效果，比如添加点击事件ClicekSpan()，所以我们的思路就很简单了：</p>
+<ol>
+<li>判断文本长度是否超过最大显示长度</li>
+<li>如果没有超过，则直接显示</li>
+<li><p>如果超过:<br>(1)则截取未超出部分文本并显示<br>(2)在文本末尾添加”展开”<br>(3)展开后在文本末尾添加”收起”<br>(4)为”展开”和”收起”添加点击事件</p>
+</li>
+<li><p>代码实现(kotlin)</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">/*</span><br><span class="line">    * 为textView添加文本长度限制</span><br><span class="line">    * @param textView       需要操作的TextView</span><br><span class="line">    * @param text           textView需要设置的文本</span><br><span class="line">    * @param limitNumber    最大允许显示的字符数</span><br><span class="line">    * @param listener       点击事件监听</span><br><span class="line">    * */</span><br><span class="line">    fun setTextViewLimit(textView: TextView, text:String, limitNumber:Int, listener:View.OnClickListener?)&#123;</span><br><span class="line">        //如果文本长度没有超过限制，则直接setText</span><br><span class="line">        if(text.length &lt; limitNumber)&#123;</span><br><span class="line">            textView.text = text</span><br><span class="line">            return</span><br><span class="line">        &#125;</span><br><span class="line">        //允许TextView中文本改变,发生移动</span><br><span class="line">        textView.movementMethod = LinkMovementMethod.getInstance()</span><br><span class="line">        //构造spannableString</span><br><span class="line">        var explicitText = &quot;&quot;</span><br><span class="line">        var explicitTextAll = &quot;&quot;</span><br><span class="line">        //最后一个字符是换行，就不读取</span><br><span class="line">        explicitText = if (&apos;\n&apos; == text.get(limitNumber))&#123;</span><br><span class="line">            text.substring(0, limitNumber)</span><br><span class="line">        &#125;else&#123;</span><br><span class="line">            text.substring(0, limitNumber+1)</span><br><span class="line">        &#125;</span><br><span class="line">        /*</span><br><span class="line">        * sourceLength：收起时Text中字符串的总长度</span><br><span class="line">        * */</span><br><span class="line">        var sourceLength = explicitText.length</span><br><span class="line">        val showMore = &quot;展开&quot;</span><br><span class="line">        explicitText = explicitText+&quot;...&quot;+showMore</span><br><span class="line">        var mSpan = SpannableString(explicitText)</span><br><span class="line"></span><br><span class="line">        val dismissMore = &quot;收起&quot;</span><br><span class="line">        explicitTextAll = text+dismissMore</span><br><span class="line">        var mSpanAll = SpannableString(explicitTextAll)</span><br><span class="line"></span><br><span class="line">        //设置“展开”的点击事件</span><br><span class="line">        mSpan.setSpan(object :ClickableSpan()&#123;</span><br><span class="line">            override fun updateDrawState(ds: TextPaint?) &#123;</span><br><span class="line">                super.updateDrawState(ds)</span><br><span class="line">                ds?.color = ContextCompat.getColor(textView.context, R.color.colorPrimary)</span><br><span class="line">                ds?.isAntiAlias = true</span><br><span class="line">                ds?.isUnderlineText = false</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            override fun onClick(widget: View?) &#123;</span><br><span class="line">                textView.text = mSpanAll</span><br><span class="line">                textView.setOnClickListener(null)</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;, sourceLength, explicitText.length, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">        //设置“收起”的点击事件</span><br><span class="line">        mSpanAll.setSpan(object :ClickableSpan()&#123;</span><br><span class="line"></span><br><span class="line">            override fun updateDrawState(ds: TextPaint?) &#123;</span><br><span class="line">                super.updateDrawState(ds)</span><br><span class="line">                ds?.color = ContextCompat.getColor(textView.context, R.color.colorPrimary)</span><br><span class="line">                ds?.isAntiAlias = true</span><br><span class="line">                ds?.isUnderlineText = false</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            override fun onClick(widget: View?) &#123;</span><br><span class="line">                textView.text = mSpan</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;, text.length, explicitTextAll.length, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)</span><br><span class="line">        //默认为需要展开状态</span><br><span class="line">        textView.setText(mSpan)</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>不到100行代码就基本实现了需求，使用时将这个方法用来替换掉setText()方法即可<br>我们可以根据自己的需求，将代码放到自定义TextView中或其他地方。<br>但需要注意，这里存在着一些坑。</p>
+<ol start="4">
+<li>存在的坑<br>坑1：ClicekSpan与textIsSelectable属性冲突<br>如果TextView设置了textIsSelectable=”true”，同时点击”展开”，会发生以下错误<br><img src="https://upload-images.jianshu.io/upload_images/7037957-d2f109ba3aa8445a.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"><br>坑2：ClicekSpan()触发后，TextView的点击事件会触发</li>
+</ol>
+<p>这两个坑先留着，以后有空再处理掉<br>如果大家有解决办法的话，可以给我留言，谢谢</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/TextView-展开-收起/" rel="tag"># TextView 展开 收起</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/10/28/为Fragment也写一个ViewInject/" rel="next" title="为Fragment也写一个ViewInject">
+                <i class="fa fa-chevron-left"></i> 为Fragment也写一个ViewInject
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">John Doe</p>
+              <p class="site-description motion-element" itemprop="description">GtLeaf 博客</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">11</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                
+                  <span class="site-state-item-count">11</span>
+                  <span class="site-state-item-name">tags</span>
+                
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#1-简介"><span class="nav-number">1.</span> <span class="nav-text">1.简介</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2-实现思路"><span class="nav-number">2.</span> <span class="nav-text">2.实现思路</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">John Doe</span>
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Mist</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

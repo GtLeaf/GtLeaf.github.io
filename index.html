@@ -232,6 +232,141 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://gtleaf.github.io/2018/12/21/简单实现实用小功能——TextView“展开-收起”功能/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="GtLeaf.砥砺前行">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/12/21/简单实现实用小功能——TextView“展开-收起”功能/" itemprop="url">简单实现实用小功能——TextView“展开/收起”功能</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-12-21T16:16:57+08:00">
+                2018-12-21
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="1-简介"><a href="#1-简介" class="headerlink" title="1.简介"></a>1.简介</h1><p>长文本的“展开/收起”功能是一个十分常见且实用的功能，今天我们就来简单粗暴的实现一下。<br>既然是简单的实现，那就只有核心思路，理解后可以自由封装。<br>参考博客：<a href="https://blog.csdn.net/qq_28695619/article/details/72857907" target="_blank" rel="noopener">https://blog.csdn.net/qq_28695619/article/details/72857907</a></p>
+<h1 id="2-实现思路"><a href="#2-实现思路" class="headerlink" title="2.实现思路"></a>2.实现思路</h1><p>这个功能的实现方法有很多，这里选用SpannableString来实现，SpannableString有一个很好用的方法————setSpan()。<br>具体可以看这篇博客：<a href="https://blog.csdn.net/gxp1182893781/article/details/76916796" target="_blank" rel="noopener">https://blog.csdn.net/gxp1182893781/article/details/76916796</a><br>这个方法的好处在于，可以为指定区域的文字设置特定的效果，比如添加点击事件ClicekSpan()，所以我们的思路就很简单了：</p>
+<ol>
+<li>判断文本长度是否超过最大显示长度</li>
+<li>如果没有超过，则直接显示</li>
+<li><p>如果超过:<br>(1)则截取未超出部分文本并显示<br>(2)在文本末尾添加”展开”<br>(3)展开后在文本末尾添加”收起”<br>(4)为”展开”和”收起”添加点击事件</p>
+</li>
+<li><p>代码实现(kotlin)</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">/*</span><br><span class="line">    * 为textView添加文本长度限制</span><br><span class="line">    * @param textView       需要操作的TextView</span><br><span class="line">    * @param text           textView需要设置的文本</span><br><span class="line">    * @param limitNumber    最大允许显示的字符数</span><br><span class="line">    * @param listener       点击事件监听</span><br><span class="line">    * */</span><br><span class="line">    fun setTextViewLimit(textView: TextView, text:String, limitNumber:Int, listener:View.OnClickListener?)&#123;</span><br><span class="line">        //如果文本长度没有超过限制，则直接setText</span><br><span class="line">        if(text.length &lt; limitNumber)&#123;</span><br><span class="line">            textView.text = text</span><br><span class="line">            return</span><br><span class="line">        &#125;</span><br><span class="line">        //允许TextView中文本改变,发生移动</span><br><span class="line">        textView.movementMethod = LinkMovementMethod.getInstance()</span><br><span class="line">        //构造spannableString</span><br><span class="line">        var explicitText = &quot;&quot;</span><br><span class="line">        var explicitTextAll = &quot;&quot;</span><br><span class="line">        //最后一个字符是换行，就不读取</span><br><span class="line">        explicitText = if (&apos;\n&apos; == text.get(limitNumber))&#123;</span><br><span class="line">            text.substring(0, limitNumber)</span><br><span class="line">        &#125;else&#123;</span><br><span class="line">            text.substring(0, limitNumber+1)</span><br><span class="line">        &#125;</span><br><span class="line">        /*</span><br><span class="line">        * sourceLength：收起时Text中字符串的总长度</span><br><span class="line">        * */</span><br><span class="line">        var sourceLength = explicitText.length</span><br><span class="line">        val showMore = &quot;展开&quot;</span><br><span class="line">        explicitText = explicitText+&quot;...&quot;+showMore</span><br><span class="line">        var mSpan = SpannableString(explicitText)</span><br><span class="line"></span><br><span class="line">        val dismissMore = &quot;收起&quot;</span><br><span class="line">        explicitTextAll = text+dismissMore</span><br><span class="line">        var mSpanAll = SpannableString(explicitTextAll)</span><br><span class="line"></span><br><span class="line">        //设置“展开”的点击事件</span><br><span class="line">        mSpan.setSpan(object :ClickableSpan()&#123;</span><br><span class="line">            override fun updateDrawState(ds: TextPaint?) &#123;</span><br><span class="line">                super.updateDrawState(ds)</span><br><span class="line">                ds?.color = ContextCompat.getColor(textView.context, R.color.colorPrimary)</span><br><span class="line">                ds?.isAntiAlias = true</span><br><span class="line">                ds?.isUnderlineText = false</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            override fun onClick(widget: View?) &#123;</span><br><span class="line">                textView.text = mSpanAll</span><br><span class="line">                textView.setOnClickListener(null)</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;, sourceLength, explicitText.length, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">        //设置“收起”的点击事件</span><br><span class="line">        mSpanAll.setSpan(object :ClickableSpan()&#123;</span><br><span class="line"></span><br><span class="line">            override fun updateDrawState(ds: TextPaint?) &#123;</span><br><span class="line">                super.updateDrawState(ds)</span><br><span class="line">                ds?.color = ContextCompat.getColor(textView.context, R.color.colorPrimary)</span><br><span class="line">                ds?.isAntiAlias = true</span><br><span class="line">                ds?.isUnderlineText = false</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            override fun onClick(widget: View?) &#123;</span><br><span class="line">                textView.text = mSpan</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;, text.length, explicitTextAll.length, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)</span><br><span class="line">        //默认为需要展开状态</span><br><span class="line">        textView.setText(mSpan)</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>不到100行代码就基本实现了需求，使用时将这个方法用来替换掉setText()方法即可<br>我们可以根据自己的需求，将代码放到自定义TextView中或其他地方。<br>但需要注意，这里存在着一些坑。</p>
+<ol start="4">
+<li>存在的坑<br>坑1：ClicekSpan与textIsSelectable属性冲突<br>如果TextView设置了textIsSelectable=”true”，同时点击”展开”，会发生以下错误<br><img src="https://upload-images.jianshu.io/upload_images/7037957-d2f109ba3aa8445a.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"><br>坑2：ClicekSpan()触发后，TextView的点击事件会触发</li>
+</ol>
+<p>这两个坑先留着，以后有空再处理掉<br>如果大家有解决办法的话，可以给我留言，谢谢</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://gtleaf.github.io/2018/10/28/为Fragment也写一个ViewInject/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1391,137 +1526,13 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://gtleaf.github.io/2018/09/24/hello-world/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="John Doe">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="GtLeaf.砥砺前行">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/09/24/hello-world/" itemprop="url">Hello World</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-09-24T16:04:14+08:00">
-                2018-09-24
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>Welcome to <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="noopener">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="noopener">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="noopener">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="noopener">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="noopener">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="noopener">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/deployment.html" target="_blank" rel="noopener">Deployment</a></p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
+  <nav class="pagination">
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right"></i></a>
+  </nav>
+
 
 
           </div>
@@ -1565,7 +1576,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">10</span>
+                  <span class="site-state-item-count">11</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
@@ -1578,7 +1589,7 @@
               
               <div class="site-state-item site-state-tags">
                 
-                  <span class="site-state-item-count">10</span>
+                  <span class="site-state-item-count">11</span>
                   <span class="site-state-item-name">tags</span>
                 
               </div>
